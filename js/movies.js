@@ -3,7 +3,7 @@ const slugs = ["kho-do-danh", "sa-vao-tinh-yeu-cuong-nhiet-cua-chung-ta", "vung-
     "an-chay-yeu", "tam-biet-khoanh-khac-rung-dong", "tinh-nong-trong-mat", "yeu-em", "duoi-tan-cay-co-ngoi-nha-mai-do", "cuu-trung-tu", "lieu-chu-ky",
     "thieu-hoa-nhuoc-cam", "than-an-the-last-immortal", "con-trai-ban-me", "khi-dien-thoai-do-chuong", "nguoi-nhen-xa-nha", "nguoi-nhen-sieu-dang",
     "nguoi-nhen-sieu-dang-2", "nguoi-nhen-tro-ve-nha", "nguoi-nhen-khong-con-nha", "nguoi-nhen", "nguoi-nhen-2", "nguoi-nhen-3", "nguoi-sat",
-    "nguoi-sat-2", "nguoi-sat-3", "nhim-sonic", "nhim-sonic-2", "nhim-sonic-3", "trieu-tuyet-luc", "hien-ngu", "cam-nguyet-nhu-ca"
+    "nguoi-sat-2", "nguoi-sat-3", "nhim-sonic", "nhim-sonic-2", "nhim-sonic-3", "trieu-tuyet-luc", "hien-ngu"
 ];
 async function loadMovie(slug) {
     const res = await fetch(`https://phim.nguonc.com/api/film/${slug}`);
