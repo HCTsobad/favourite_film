@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="image/Flash.png" type="image/x-icon">
+    <title>Movie Favourite - Player</title>
+    <link rel="stylesheet" href="css/player.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* thêm chút style cơ bản cho danh sách tập */
+        .episode-list {
+            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+
+        .episode-btn {
+            padding: 6px 10px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer
+        }
+
+        .episode-btn.active {
+            background: #e50914;
+            border-color: #e50914
+        }
+
+        .video-player {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden
+        }
+
+        .video-player iframe,
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="index.html" class="logo"><img src="image/netflix.png" alt="Logo">Netflix</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="movies.html">Movies</a>
+            <a href="music.html">Music</a>
+            <a href="tvshow.html">TV Show</a>
+            <a href="anime.html">Anime</a>
+        </div>
+        <div class="container">
+            <div class="search-container">
+                <input id="searchInput" class="input" type="text">
+                <svg viewBox="0 0 24 24" class="search__icon">
+                    <g>
+                        <path
+                            d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                        </path>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="resultContainer"></div>
+
+    <!-- Player -->
+    <div class="player-container">
+        <h2 class="movie-title">Now Playing</h2>
+        <div class="video-player" id="player"></div>
+        <div id="episode-list" class="episode-list"></div>
+    </div>
+
+    <script>
+        // ---- DOM refs (khai báo 1 lần) ----
+        const playerDiv = document.getElementById('player');
+        const episodeListDiv = document.getElementById('episode-list');
+
+        // ---- Query params ----
+        const params = new URLSearchParams(window.location.search);
+        const videoUrl = params.get('video');    // video đơn (YouTube/Vimeo/mp4/Dropbox)
+        const slug = params.get('slug');     // phim từ API
+        const playlist = params.get('playlist'); // JSON playlist nhiều tập (tùy chọn)
+
+        // ---- Helpers ----
+        function playVideo(url) {
+            // Giữ nguyên url embed (API đã trả dạng embed)
+            if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('vimeo.com')) {
+                playerDiv.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            } else if (url.endsWith('.mp4') || url.endsWith('.m3u8')) {
+                playerDiv.innerHTML = `<video controls autoplay><source src="${url}" type="video/mp4">Trình duyệt không hỗ trợ video.</video>`;
+            } else {
+                playerDiv.innerHTML = `<iframe src="${url}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            }
+        }
+
+        function renderEpisodes(episodes) {
+            // episodes: [{name, link}]
+            if (!episodes || episodes.length === 0) {
+                episodeListDiv.innerHTML = "";
+                playerDiv.innerHTML = "<p>Không có tập phim nào!</p>";
+                return;
+            }
+
+            // phát tập 1 mặc định
+            playVideo(episodes[0].link);
+
+            // render list
+            episodeListDiv.innerHTML = episodes.map((ep, i) =>
+                `<button class="episode-btn ${i === 0 ? 'active' : ''}" data-link="${ep.link}">Tập ${ep.name || (i + 1)}</button>`
+            ).join('');
+
+            // click chọn tập
+            episodeListDiv.querySelectorAll('.episode-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    episodeListDiv.querySelectorAll('.episode-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    playVideo(btn.dataset.link);
+                });
+            });
+        }
+
+        // ---- Trường hợp video đơn (từ JSON) -> không hiển thị danh sách tập ----
+        if (videoUrl) {
+            playVideo(videoUrl);
+            episodeListDiv.style.display = 'none';
+        }
+
+        async function fetchWithDelayRetry(url, retries = 3, delayMs = 1000) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+                    return await res.json();
+                } catch (err) {
+                    console.warn(`Thử lần ${i + 1} thất bại:`, err);
+                    if (i < retries - 1) {
+                        await new Promise(r => setTimeout(r, delayMs));
+                    } else {
+                        throw err;
+                    }
+                }
+            }
+        }
+
+        if (slug) {
+            fetchWithDelayRetry(`https://phim.nguonc.com/api/film/${slug}`, 3, 1500)
+                .then(json => {
+                    console.log("API trả về:", json);
+                    if (!json.movie || !json.movie.episodes?.length) {
+                        playerDiv.innerHTML = "<p>Không có dữ liệu phim!</p>";
+                        return;
+                    }
+                    const vietsubServer = json.movie.episodes[0];
+                    if (!vietsubServer?.items?.length) {
+                        playerDiv.innerHTML = "<p>Không có tập Vietsub nào!</p>";
+                        return;
+                    }
+                    const data = vietsubServer.items.map(ep => ({
+                        name: ep.name,
+                        link: ep.embed
+                    }));
+                    renderEpisodes(data);
+                })
+                .catch(err => {
+                    console.error("API error:", err);
+                    playerDiv.innerHTML = "<p>Lỗi tải phim API.</p>";
+                });
+        }
+
+        // ---- Trường hợp playlist JSON nhiều tập (tùy chọn) ----
+        if (playlist) {
+            fetch(playlist)
+                .then(r => r.json())
+                .then(list => {
+                    // kỳ vọng: [{name:"1", link:"..."}, ...]
+                    renderEpisodes(Array.isArray(list) ? list : []);
+                })
+                .catch(err => {
+                    console.error("Playlist error:", err);
+                    playerDiv.innerHTML = "<p>Lỗi tải playlist.</p>";
+                });
+        }
+        fetch("footer.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("footer").innerHTML = data;
+            });
+        let data = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch('data/movies.json');
+                if (!response.ok) throw new Error('Không thể tải dữ liệu JSON');
+                data = await response.json();
+                console.log('Dữ liệu đã load:', data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        async function init() {
+            await loadData();
+
+            const input = document.getElementById('searchInput');
+            const resultContainer = document.getElementById('resultContainer');
+
+            input.addEventListener('input', function () {
+                const query = this.value.toLowerCase().trim();
+                if (!query) {
+                    resultContainer.innerHTML = '';
+                    return;
+                }
+
+                const filtered = data.filter(item => item.title.toLowerCase().includes(query)
+                    ||
+                    (item.desc && item.desc.toLowerCase().includes(query)));
+
+                if (filtered.length === 0) {
+                    resultContainer.innerHTML = '<p>Không tìm thấy kết quả nào.</p>';
+                    return;
+                }
+
+                const html = filtered.map(item => `
+                <div class="result-item">
+                    <img src="${item.image}" alt="${item.title}" width="120">
+                    <h4>${item.title}</h4>
+                </div>
+            `).join('');
+
+                resultContainer.innerHTML = html;
+                document.querySelectorAll('.result-item').forEach((el, idx) => {
+                    el.addEventListener('click', () => {
+                        const video = filtered[idx].video;
+                        window.location.href = `player.html?video=${encodeURIComponent(video)}`;
+                    });
+                });
+            });
+        }
+
+        window.onload = init;
+    </script>
+
+    <div id="footer"></div>
+</body>
+
+</html>

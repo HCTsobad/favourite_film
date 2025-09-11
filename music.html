@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Favourite</title>
+    <link rel="shortcut icon" href="image/Flash.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="index.html" class="logo"><img src="image/netflix.png" alt="Logo">Netflix</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="movies.html">Movies</a>
+            <a href="music.html">Music</a>
+            <a href="tvshow.html">TV Show</a>
+            <a href="anime.html">Anime</a>
+        </div>
+        <!-- From Uiverse.io by Smit-Prajapati -->
+        <div class="container">
+            <div class="search-container">
+                <input id="searchInput" class="input" type="text">
+                <svg viewBox="0 0 24 24" class="search__icon">
+                    <g>
+                        <path
+                            d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                        </path>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="resultContainer"></div>
+
+
+    <!-- Movie Grid -->
+    <div class="movie-container">
+        <h2>Popular</h2>
+        <div class="movie-grid" id="movieGrid"></div>
+    </div>
+
+    <script>
+        fetch("footer.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("footer").innerHTML = data;
+            });
+        fetch('data/movies.json')
+            .then(res => res.json())
+            .then(movies => {
+                const grid = document.getElementById('movieGrid');
+
+                // Chỉ lấy video có type = music
+                const musicMovies = movies.filter(movie => movie.type === 'music');
+
+                musicMovies.forEach(movie => {
+                    const card = document.createElement('div');
+                    card.className = 'movie-card';
+                    card.dataset.video = movie.video;
+                    card.innerHTML = `
+                <img src="${movie.image}" alt="${movie.title}">
+                <div class="movie-info">
+                  <div class="movie-title">${movie.title}</div>
+                  <div class="movie-desc">${movie.desc}</div>
+                </div>
+            `;
+                    card.addEventListener('click', () => {
+                        window.location.href = `player.html?video=${encodeURIComponent(movie.video)}`;
+                    });
+                    grid.appendChild(card);
+                });
+            })
+            .catch(err => {
+                console.error('Lỗi load API:', err);
+                document.getElementById('movieGrid').innerHTML = "<p>Không tải được danh sách phim.</p>";
+            });
+
+        let data = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch('data/movies.json');
+                if (!response.ok) throw new Error('Không thể tải dữ liệu JSON');
+                data = await response.json();
+                console.log('Dữ liệu đã load:', data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        async function init() {
+            await loadData();
+
+            const input = document.getElementById('searchInput');
+            const resultContainer = document.getElementById('resultContainer');
+
+            input.addEventListener('input', function () {
+                const query = this.value.toLowerCase().trim();
+                if (!query) {
+                    resultContainer.innerHTML = '';
+                    return;
+                }
+
+                const filtered = data.filter(item => item.title.toLowerCase().includes(query)
+                    ||
+                    (item.desc && item.desc.toLowerCase().includes(query)));
+
+                if (filtered.length === 0) {
+                    resultContainer.innerHTML = '<p>Không tìm thấy kết quả nào.</p>';
+                    return;
+                }
+
+                const html = filtered.map(item => `
+                <div class="result-item">
+                    <img src="${item.image}" alt="${item.title}" width="120">
+                    <h4>${item.title}</h4>
+                </div>
+            `).join('');
+
+                resultContainer.innerHTML = html;
+                document.querySelectorAll('.result-item').forEach((el, idx) => {
+                    el.addEventListener('click', () => {
+                        const video = filtered[idx].video;
+                        window.location.href = `player.html?video=${encodeURIComponent(video)}`;
+                    });
+                });
+            });
+        }
+
+        window.onload = init;
+    </script>
+    <div id="footer"></div>
+</body>
+
+</html>

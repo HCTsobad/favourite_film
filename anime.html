@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Favourite</title>
+    <link rel="shortcut icon" href="image/Flash.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .pl {
+            width: 6em;
+            height: 6em;
+        }
+
+        .pl__ring {
+            animation: ringA 2s linear infinite;
+        }
+
+        .pl__ring--a {
+            stroke: #f42f25;
+        }
+
+        .pl__ring--b {
+            animation-name: ringB;
+            stroke: #f49725;
+        }
+
+        .pl__ring--c {
+            animation-name: ringC;
+            stroke: #255ff4;
+        }
+
+        .pl__ring--d {
+            animation-name: ringD;
+            stroke: #f42582;
+        }
+
+        /* Animations */
+        @keyframes ringA {
+
+            from,
+            4% {
+                stroke-dasharray: 0 660;
+                stroke-width: 20;
+                stroke-dashoffset: -330;
+            }
+
+            12% {
+                stroke-dasharray: 60 600;
+                stroke-width: 30;
+                stroke-dashoffset: -335;
+            }
+
+            32% {
+                stroke-dasharray: 60 600;
+                stroke-width: 30;
+                stroke-dashoffset: -595;
+            }
+
+            40%,
+            54% {
+                stroke-dasharray: 0 660;
+                stroke-width: 20;
+                stroke-dashoffset: -660;
+            }
+
+            62% {
+                stroke-dasharray: 60 600;
+                stroke-width: 30;
+                stroke-dashoffset: -665;
+            }
+
+            82% {
+                stroke-dasharray: 60 600;
+                stroke-width: 30;
+                stroke-dashoffset: -925;
+            }
+
+            90%,
+            to {
+                stroke-dasharray: 0 660;
+                stroke-width: 20;
+                stroke-dashoffset: -990;
+            }
+        }
+
+        @keyframes ringB {
+
+            from,
+            12% {
+                stroke-dasharray: 0 220;
+                stroke-width: 20;
+                stroke-dashoffset: -110;
+            }
+
+            20% {
+                stroke-dasharray: 20 200;
+                stroke-width: 30;
+                stroke-dashoffset: -115;
+            }
+
+            40% {
+                stroke-dasharray: 20 200;
+                stroke-width: 30;
+                stroke-dashoffset: -195;
+            }
+
+            48%,
+            62% {
+                stroke-dasharray: 0 220;
+                stroke-width: 20;
+                stroke-dashoffset: -220;
+            }
+
+            70% {
+                stroke-dasharray: 20 200;
+                stroke-width: 30;
+                stroke-dashoffset: -225;
+            }
+
+            90% {
+                stroke-dasharray: 20 200;
+                stroke-width: 30;
+                stroke-dashoffset: -305;
+            }
+
+            98%,
+            to {
+                stroke-dasharray: 0 220;
+                stroke-width: 20;
+                stroke-dashoffset: -330;
+            }
+        }
+
+        @keyframes ringC {
+            from {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: 0;
+            }
+
+            8% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -5;
+            }
+
+            28% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -175;
+            }
+
+            36%,
+            58% {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: -220;
+            }
+
+            66% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -225;
+            }
+
+            86% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -395;
+            }
+
+            94%,
+            to {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: -440;
+            }
+        }
+
+        @keyframes ringD {
+
+            from,
+            8% {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: 0;
+            }
+
+            16% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -5;
+            }
+
+            36% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -175;
+            }
+
+            44%,
+            50% {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: -220;
+            }
+
+            58% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -225;
+            }
+
+            78% {
+                stroke-dasharray: 40 400;
+                stroke-width: 30;
+                stroke-dashoffset: -395;
+            }
+
+            86%,
+            to {
+                stroke-dasharray: 0 440;
+                stroke-width: 20;
+                stroke-dashoffset: -440;
+            }
+        }
+
+        .loader-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* hoặc 100vh nếu muốn chiếm cả màn */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="index.html" class="logo"><img src="image/netflix.png" alt="Logo">Netflix</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="movies.html">Movies</a>
+            <a href="music.html">Music</a>
+            <a href="tvshow.html">TV Show</a>
+            <a href="anime.html">Anime</a>
+        </div>
+        <!-- From Uiverse.io by Smit-Prajapati -->
+        <div class="container">
+            <div class="search-container">
+                <input id="searchInput" class="input" type="text">
+                <svg viewBox="0 0 24 24" class="search__icon">
+                    <g>
+                        <path
+                            d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                        </path>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="resultContainer"></div>
+
+
+    <!-- Movie Grid -->
+    <div class="movie-container">
+        <h2>Phim API</h2>
+        <div class="movie-grid" id="apiMovieGrid"></div>
+    </div>
+
+    <div class="movie-container">
+        <h2>Phim JSON</h2>
+        <div class="movie-grid" id="jsonMovieGrid"></div>
+    </div>
+
+
+    <script>
+        const slugs = ["tham-tu-lung-danh-conan", "detective-conan-movie-27-the-million-dollar-pentagram", "detective-conan-movie-026-black-iron-submarine",
+            "detective-conan-movie-25-halloween-no-hanayome", "detective-conan-movie-24-the-scarlet-bullet", "detective-conan-movie-23-the-fist-of-blue-sapphire",
+            "detective-conan-movie-22-zero-the-enforcer", "detective-conan-movie-21-the-crimson-love-letter", "detective-conan-movie-20-the-darkest-nightmare",
+            "detective-conan-movie-19-the-hellfire-sunflowers", "detective-conan-movie-18-the-sniper-from-another-dimension", "detective-conan-movie-17-private-eye-in-the-distant-sea",
+            "detective-conan-movie-16-the-eleventh-striker", "detective-conan-movie-15-quarter-of-silence", "detective-conan-movie-14-the-lost-ship-in-the-sky",
+            "detective-conan-movie-13-the-raven-chaser", "detective-conan-movie-12-full-score-of-fear", "detective-conan-movie-11-jolly-roger-in-the-deep-azure",
+            "detective-conan-movie-10-requiem-of-the-detectives", "detective-conan-movie-09-strategy-above-the-depths", "detective-conan-movie-08-magician-of-the-silver-sky",
+            "detective-conan-movie-07-crossroad-in-the-ancient-capital", "detective-conan-movie-06-the-phantom-of-baker-street", "detective-conan-movie-05-countdown-to-heaven",
+            "detective-conan-movie-04-captured-in-her-eyes", "detective-conan-movie-03-the-last-wizard-of-the-century", "detective-conan-movie-02-the-fourteenth-target",
+            "detective-conan-movie-01-the-timed-skyscraper"
+        ];
+        async function loadMovie(slug) {
+            const res = await fetch(`https://phim.nguonc.com/api/film/${slug}`);
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            const data = await res.json();
+            return { ...data.movie, slug };
+        }
+
+        async function loadSelectedMovies(retry = 0) {
+            const grid = document.getElementById("apiMovieGrid");
+
+            // hiện spinner trước
+            grid.innerHTML = `<div class="loader-container">
+        <svg class="pl" width="80" height="80" viewBox="0 0 240 240">
+          <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000" stroke-width="20"></circle>
+          <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000" stroke-width="20"></circle>
+          <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke="#000" stroke-width="20"></circle>
+          <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke="#000" stroke-width="20"></circle>
+        </svg>
+        <p>Đang tải phim... (thử lại lần ${retry + 1})</p>
+    </div>`;
+
+            try {
+                const results = await Promise.allSettled(slugs.map(slug => loadMovie(slug)));
+
+                const successMovies = results.filter(r => r.status === "fulfilled").map(r => r.value);
+
+                if (successMovies.length === 0) {
+                    console.warn("Không tải được phim nào, thử lại...");
+                    if (retry < 3) { // 👈 Giới hạn số lần retry, ví dụ 3 lần
+                        setTimeout(() => loadSelectedMovies(retry + 1), 2000); // đợi 2s rồi thử lại
+                    } else {
+                        grid.innerHTML = "<p>Lỗi tải dữ liệu phim. Vui lòng thử lại sau.</p>";
+                    }
+                    return;
+                }
+
+                // render ra HTML
+                let html = "";
+                successMovies.forEach((movie, idx) => {
+                    html += `
+              <div class="movie-card" data-slug="${slugs[idx]}">
+                  <img src="${movie.thumb_url}" alt="${movie.name}">
+                  <div class="movie-info">
+                      <div class="movie-title">${movie.name}</div>
+                      <div class="movie-desc">${movie.origin_name || ""}</div>
+                      <p>${movie.original_name || ""}</p>
+                      <p>Số tập: ${movie.total_episodes || "?"}</p>
+                      <p>Thời lượng: ${movie.time || "?"}</p>
+                  </div>
+              </div>
+            `;
+                });
+
+                grid.innerHTML = html;
+
+                document.querySelectorAll(".movie-card").forEach(card => {
+                    card.addEventListener("click", () => {
+                        window.location.href = `player.html?slug=${card.dataset.slug}`;
+                    });
+                });
+
+            } catch (err) {
+                console.error("Lỗi load dữ liệu:", err);
+                grid.innerHTML = "<p>Lỗi tải dữ liệu phim.</p>";
+            }
+        }
+
+        // chạy khi load trang
+        loadSelectedMovies();
+        fetch("footer.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("footer").innerHTML = data;
+            });
+        fetch('data/movies.json')
+            .then(res => res.json())
+            .then(movies => {
+                const grid = document.getElementById('jsonMovieGrid');
+
+                const animeMovies = movies.filter(movie => movie.type === 'anime');
+
+                animeMovies.forEach(movie => {
+                    const card = document.createElement('div');
+                    card.className = 'movie-card';
+                    card.dataset.video = movie.video;
+                    card.innerHTML = `
+                <img src="${movie.image}" alt="${movie.title}">
+                <div class="movie-info">
+                  <div class="movie-title">${movie.title}</div>
+                  <div class="movie-desc">${movie.desc}</div>
+                </div>
+            `;
+                    card.addEventListener('click', () => {
+                        window.location.href = `player.html?video=${encodeURIComponent(movie.video)}`;
+                    });
+                    grid.appendChild(card);
+                });
+            })
+            .catch(err => {
+                console.error('Lỗi load API:', err);
+                document.getElementById('movieGrid').innerHTML = "<p>Không tải được danh sách phim.</p>";
+            });
+
+        let data = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch('data/movies.json');
+                if (!response.ok) throw new Error('Không thể tải dữ liệu JSON');
+                data = await response.json();
+                console.log('Dữ liệu đã load:', data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        async function init() {
+            await loadData();
+
+            const input = document.getElementById('searchInput');
+            const resultContainer = document.getElementById('resultContainer');
+
+            input.addEventListener('input', function () {
+                const query = this.value.toLowerCase().trim();
+                if (!query) {
+                    resultContainer.innerHTML = '';
+                    return;
+                }
+
+                const filtered = data.filter(item => item.title.toLowerCase().includes(query)
+                    ||
+                    (item.desc && item.desc.toLowerCase().includes(query)));
+
+                if (filtered.length === 0) {
+                    resultContainer.innerHTML = '<p>Không tìm thấy kết quả nào.</p>';
+                    return;
+                }
+
+                const html = filtered.map(item => `
+                <div class="result-item">
+                    <img src="${item.image}" alt="${item.title}" width="120">
+                    <h4>${item.title}</h4>
+                </div>
+            `).join('');
+
+                resultContainer.innerHTML = html;
+                document.querySelectorAll('.result-item').forEach((el, idx) => {
+                    el.addEventListener('click', () => {
+                        const video = filtered[idx].video;
+                        window.location.href = `player.html?video=${encodeURIComponent(video)}`;
+                    });
+                });
+            });
+        }
+
+        window.onload = init;
+    </script>
+    <div id="footer"></div>
+</body>
+
+</html>
