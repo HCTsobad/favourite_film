@@ -222,5 +222,12 @@
         "desc": "| Sau Cơn Mưa, Hẹn Một Mai, Từng Ngày Yêu Em",
         "image": "http://img.youtube.com/vi/kWSwdqJOR18/maxresdefault.jpg",
         "video": "https://www.youtube.com/embed/kWSwdqJOR18"
+    },
+    {
+        "type": "tvshow",
+        "title": "Running Man Mùa 3",
+        "desc": "Tập 1",
+        "image": "http://img.youtube.com/vi/pMp6dAlTXT0/maxresdefault.jpg",
+        "video": "https://www.youtube.com/embed/pMp6dAlTXT0"
     }
 ]
