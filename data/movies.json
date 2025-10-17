@@ -78,13 +78,6 @@
     },
     {
         "type": "tvshow",
-        "title": "CHẠY ĐI CHỜ CHI #10",
-        "desc": "| CUỘC ĐUA CHIA RẼ LỨA ĐÔI",
-        "image": "http://img.youtube.com/vi/R8rY31ezAZk/maxresdefault.jpg",
-        "video": "https://www.youtube.com/embed/R8rY31ezAZk"
-    },
-    {
-        "type": "tvshow",
         "title": "CHẠY ĐI CHỜ CHI #11",
         "desc": "| CUỘC ĐẤU CỦA CÁC CÂU LẠC BỘ",
         "image": "http://img.youtube.com/vi/R5HB_Q2f66U/maxresdefault.jpg",
@@ -138,13 +131,6 @@
         "desc": "Khoan Thai Remix, Có Đáng Để Yêu Thương Remix",
         "image": "http://img.youtube.com/vi/INiv7uB6XVQ/maxresdefault.jpg",
         "video": "https://www.youtube.com/embed/INiv7uB6XVQ"
-    },
-    {
-        "type": "tvshow",
-        "title": "FPT X FLASH vs SAIGON PHANTOM",
-        "desc": "ABBEN ENERGY ĐTDV MÙA XUÂN 2025",
-        "image": "http://img.youtube.com/vi/vkrzo8yrH9c/maxresdefault.jpg",
-        "video": "https://www.youtube.com/embed/vkrzo8yrH9c"
     },
     {
         "type": "music",
@@ -229,5 +215,12 @@
         "desc": "Tập 1",
         "image": "http://img.youtube.com/vi/pMp6dAlTXT0/maxresdefault.jpg",
         "video": "https://www.youtube.com/embed/pMp6dAlTXT0"
+    },
+    {
+        "type": "tvshow",
+        "title": "Running Man Mùa 3",
+        "desc": "Tập 2",
+        "image": "http://img.youtube.com/vi/3NMr0tF_l-0/maxresdefault.jpg",
+        "video": "https://www.youtube.com/embed/3NMr0tF_l-0"
     }
 ]
