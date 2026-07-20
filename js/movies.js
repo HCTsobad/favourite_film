@@ -1,18 +1,3 @@
-const slugs = ["kho-do-danh", "sa-vao-tinh-yeu-cuong-nhiet-cua-chung-ta", "vung-trom-khong-the-giau", "khi-anh-chay-ve-phia-em", "man-thanh",
-    "treu-nham-yeu-that-di-ai-vi-doanh", "chiec-bat-lua-va-vay-cong-chua", "anh-dao-ho-phach", "suyt-quoc-vuong-dang-ngu-dong",
-    "an-chay-yeu", "tam-biet-khoanh-khac-rung-dong", "tinh-nong-trong-mat", "yeu-em", "duoi-tan-cay-co-ngoi-nha-mai-do", "cuu-trung-tu", "lieu-chu-ky",
-    "thieu-hoa-nhuoc-cam", "than-an-the-last-immortal", "con-trai-ban-me", "khi-dien-thoai-do-chuong", "nguoi-nhen-xa-nha", "nguoi-nhen-sieu-dang",
-    "nguoi-nhen-sieu-dang-2", "nguoi-nhen-tro-ve-nha", "nguoi-nhen-khong-con-nha", "nguoi-nhen", "nguoi-nhen-2", "nguoi-nhen-3", "nguoi-sat",
-    "nguoi-sat-2", "nguoi-sat-3", "nhim-sonic", "nhim-sonic-2", "nhim-sonic-3", "trieu-tuyet-luc", "hien-ngu", "nhap-thanh-van", "hay-de-toi-toa-sang",
-    "con-duong-ruc-lua", "am-ha-truyen", "thieu-nien-bach-ma-tuy-xuan-phong"
-];
-async function loadMovie(slug) {
-    const res = await fetch(`https://phim.nguonc.com/api/film/${slug}`);
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    const data = await res.json();
-    return { ...data.movie, slug };
-}
-
 async function loadSelectedMovies(retry = 0) {
     const grid = document.getElementById("movieGrid");
 
@@ -28,9 +13,12 @@ async function loadSelectedMovies(retry = 0) {
     </div>`;
 
     try {
-        const results = await Promise.allSettled(slugs.map(slug => loadMovie(slug)));
-
-        const successMovies = results.filter(r => r.status === "fulfilled").map(r => r.value);
+        const catalogues = await window.MovieApiLoader.loadCatalogues();
+        const slugs = catalogues.movies?.slugs || [];
+        if (!slugs.length) throw new Error('Danh mục Movies đang trống.');
+        const results = await window.MovieApiLoader.loadMovies(slugs, { concurrency: 4 });
+        const successMovies = results.filter(result => result.movie).map(result => result.movie);
+        successMovies.sort((first, second) => Number(second.year || 0) - Number(first.year || 0));
 
         if (successMovies.length === 0) {
             console.warn("Không tải được phim nào, thử lại...");
@@ -44,9 +32,9 @@ async function loadSelectedMovies(retry = 0) {
 
         // render ra HTML
         let html = "";
-        successMovies.forEach((movie, idx) => {
+        successMovies.forEach((movie) => {
             html += `
-              <div class="movie-card" data-slug="${slugs[idx]}">
+              <div class="movie-card" data-slug="${movie.slug}" data-year="${movie.year || ''}" data-quality="${movie.quality || 'FULL'}" data-label="${movie.lang || 'Vietsub'}">
                   <img src="${movie.thumb_url}" alt="${movie.name}">
                   <div class="movie-info">
                       <div class="movie-title">${movie.name}</div>
@@ -61,9 +49,10 @@ async function loadSelectedMovies(retry = 0) {
 
         grid.innerHTML = html;
 
-        document.querySelectorAll(".movie-card").forEach(card => {
+        grid.querySelectorAll(".movie-card").forEach((card, index) => {
+            window.MovieCardRenderer.decorateApi(card, successMovies[index]);
             card.addEventListener("click", () => {
-                window.location.href = `player.html?slug=${card.dataset.slug}`;
+                window.location.href = `detail.html?slug=${card.dataset.slug}`;
             });
         });
 

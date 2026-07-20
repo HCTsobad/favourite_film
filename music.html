@@ -14,29 +14,34 @@
 
     <!-- Navbar -->
     <div class="navbar">
-        <a href="index.html" class="logo"><img src="image/netflix.png" alt="Logo">Netflix</a>
+        <a href="index.html" class="logo"><img src="image/banmei.jpg" alt="Zacian logo">Zacian</a>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="movies.html">Movies</a>
             <a href="music.html">Music</a>
             <a href="tvshow.html">TV Show</a>
             <a href="anime.html">Anime</a>
+            <a href="ranking.html">BXH</a>
         </div>
-        <!-- From Uiverse.io by Smit-Prajapati -->
-        <div class="container">
+        <div class="container catalog-search">
             <div class="search-container">
-                <input id="searchInput" class="input" type="text">
-                <svg viewBox="0 0 24 24" class="search__icon">
+                <input id="searchInput" class="input" type="search" placeholder="Tìm phim, nhạc, anime…"
+                    autocomplete="off" aria-label="Tìm trong danh mục" aria-controls="resultContainer"
+                    aria-expanded="false" role="combobox">
+                <button id="clearSearch" class="clear-search" type="button" aria-label="Xóa từ khóa" hidden>&times;</button>
+                <button id="searchButton" class="search-button" type="button" aria-label="Mở tìm kiếm">
+                    <svg viewBox="0 0 24 24" class="search__icon" aria-hidden="true">
                     <g>
                         <path
                             d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
                         </path>
                     </g>
-                </svg>
+                    </svg>
+                </button>
             </div>
+            <div id="resultContainer" role="listbox" aria-label="Kết quả tìm kiếm" hidden></div>
         </div>
     </div>
-    <div id="resultContainer"></div>
 
 
     <!-- Movie Grid -->
@@ -45,6 +50,7 @@
         <div class="movie-grid" id="movieGrid"></div>
     </div>
 
+    <script src="js/movie-card.js"></script>
     <script>
         fetch("footer.html")
             .then(response => response.text())
@@ -57,7 +63,7 @@
                 const grid = document.getElementById('movieGrid');
 
                 // Chỉ lấy video có type = music
-                const musicMovies = movies.filter(movie => movie.type === 'music');
+                const musicMovies = movies.filter(movie => movie.type === 'music').reverse();
 
                 musicMovies.forEach(movie => {
                     const card = document.createElement('div');
@@ -70,8 +76,9 @@
                   <div class="movie-desc">${movie.desc}</div>
                 </div>
             `;
+                    window.MovieCardRenderer.decorateLocal(card, movie);
                     card.addEventListener('click', () => {
-                        window.location.href = `player.html?video=${encodeURIComponent(movie.video)}`;
+                        window.location.href = `detail.html?video=${encodeURIComponent(movie.video)}`;
                     });
                     grid.appendChild(card);
                 });
@@ -133,9 +140,10 @@
             });
         }
 
-        window.onload = init;
+        // Search is initialized by js/search.js so every page behaves consistently.
     </script>
     <div id="footer"></div>
+    <script src="js/search.js"></script>
 </body>
 
 </html>

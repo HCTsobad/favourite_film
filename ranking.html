@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bảng xếp hạng phim yêu thích của bạn.">
+    <title>BXH yêu thích | Movie Favourite</title>
+    <link rel="shortcut icon" href="image/Flash.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="js/api-movies.js"></script>
+</head>
+
+<body>
+    <header class="navbar">
+        <a href="index.html" class="logo"><img src="image/banmei.jpg" alt="Zacian logo">Zacian</a>
+        <nav class="nav-links" aria-label="Điều hướng chính">
+            <a href="index.html">Home</a>
+            <a href="movies.html">Movies</a>
+            <a href="music.html">Music</a>
+            <a href="tvshow.html">TV Show</a>
+            <a href="anime.html">Anime</a>
+            <a href="ranking.html" aria-current="page">BXH</a>
+        </nav>
+        <div class="container catalog-search">
+            <div class="search-container">
+                <input id="searchInput" class="input" type="search" placeholder="Tìm phim, nhạc, anime…"
+                    autocomplete="off" aria-label="Tìm trong danh mục" aria-controls="resultContainer"
+                    aria-expanded="false" role="combobox">
+                <button id="clearSearch" class="clear-search" type="button" aria-label="Xóa từ khóa"
+                    hidden>&times;</button>
+                <button id="searchButton" class="search-button" type="button" aria-label="Mở tìm kiếm">
+                    <svg viewBox="0 0 24 24" class="search__icon" aria-hidden="true">
+                        <g>
+                            <path
+                                d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
+                            </path>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            <div id="resultContainer" role="listbox" aria-label="Kết quả tìm kiếm" hidden></div>
+        </div>
+    </header>
+
+    <main class="ranking-page">
+        <section class="ranking-hero">
+            <p class="ranking-eyebrow"><i class="fa-solid fa-trophy" aria-hidden="true"></i>BXH cá nhân</p>
+            <h1>Phim bạn yêu thích</h1>
+        </section>
+
+        <div class="ranking-layout">
+            <section class="ranking-panel" aria-labelledby="rankingTitle">
+                <div class="ranking-panel-heading">
+                    <div>
+                        <h2 id="rankingTitle">Bảng xếp hạng</h2>
+                        <p id="rankingCount">Chưa có phim nào</p>
+                    </div>
+                    <button id="clearRanking" class="ranking-clear" type="button" hidden>Xóa BXH</button>
+                </div>
+                <ol id="rankingList" class="ranking-list"></ol>
+            </section>
+
+            <aside class="ranking-panel ranking-add-panel" aria-labelledby="addMovieTitle">
+                <h2 id="addMovieTitle">Thêm vào BXH</h2>
+                <p>Tìm trong toàn bộ phim, anime, nhạc và TV Show của trang.</p>
+                <label class="ranking-search-label" for="rankingSearch">Tên phim hoặc từ khóa</label>
+                <input id="rankingSearch" class="ranking-search-input" type="search"
+                    placeholder="Ví dụ: Conan, Spider-Man…" autocomplete="off">
+                <div id="rankingSearchStatus" class="ranking-search-status" aria-live="polite"></div>
+                <div id="rankingCandidates" class="ranking-candidates"></div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+    <script src="js/search.js"></script>
+    <script src="js/ranking.js"></script>
+</body>
+
+</html>

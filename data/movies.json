@@ -35,13 +35,6 @@
         "video": "https://www.youtube.com/embed/pDGgiTU8g8Y"
     },
     {
-        "type": "anime",
-        "title": "Doraemon Phần 13",
-        "desc": "Tập 646 - Huy hiệu đầu bếp",
-        "image": "http://img.youtube.com/vi/iuw8fmMliSc/maxresdefault.jpg",
-        "video": "https://player.vimeo.com/video/1109371570"
-    },
-    {
         "type": "music",
         "title": "Playlist nhạc chill",
         "desc": "có phải hai đứa đang rất an lành..?",
@@ -61,13 +54,6 @@
         "desc": "Nắng Dưới Chân Mây Remix, Phải Chi Anh Là Kẻ Tồi Rời Bỏ Đi Lúc Yêu Thôi",
         "image": "http://img.youtube.com/vi/ZtDKX9nHmx0/maxresdefault.jpg",
         "video": "https://www.youtube.com/embed/ZtDKX9nHmx0"
-    },
-    {
-        "type": "music",
-        "title": "Nhạc Remix Triệu View TikTok 2025",
-        "desc": "Để Anh Lương Thiện Remix, Phải Cự Tuyệt Đôi Lứa Remix TikTok",
-        "image": "http://img.youtube.com/vi/QdOwKz6i-8k/maxresdefault.jpg",
-        "video": "https://www.youtube.com/embed/QdOwKz6i-8k"
     },
     {
         "type": "music",
@@ -127,13 +113,6 @@
     },
     {
         "type": "music",
-        "title": "TOP 4 Nhạc Remix Hot TikTok Triệu View 2025",
-        "desc": "Khoan Thai Remix, Có Đáng Để Yêu Thương Remix",
-        "image": "http://img.youtube.com/vi/INiv7uB6XVQ/maxresdefault.jpg",
-        "video": "https://www.youtube.com/embed/INiv7uB6XVQ"
-    },
-    {
-        "type": "music",
         "title": "Playlist giai điệu tình suy",
         "desc": "",
         "image": "http://img.youtube.com/vi/TjHF_7g1zbY/maxresdefault.jpg",
@@ -173,13 +152,6 @@
         "desc": "Khoan Thai Remix, Nơi Nào Cho Con Tim Nguôi Ngoai Thôi Chông Gai Ngang Trái",
         "image": "http://img.youtube.com/vi/bfGNNnsSfA0/maxresdefault.jpg",
         "video": "https://www.youtube.com/embed/bfGNNnsSfA0"
-    },
-    {
-        "type": "music",
-        "title": "Top 25 Remix Thịnh Hành",
-        "desc": "Yêu Thương Nhau Gì Đâu Mà Chỉ Toàn Là Niềm Đau🎼",
-        "image": "http://img.youtube.com/vi/hb3Ix24R718/maxresdefault.jpg",
-        "video": "https://www.youtube.com/embed/hb3Ix24R718"
     },
     {
         "type": "music",
@@ -227,7 +199,28 @@
         "type": "music",
         "title": "NHẠC REMIX TIKTOK TRIỆU VIEW 🎼Top 20 Nhạc TikTok Hay 2025",
         "desc": "",
-        "image": "http://img.youtube.com/vi/0SNZCz0r9-M/maxresdefault.jpg",
-        "video": "https://www.youtube.com/embed/0SNZCz0r9-M"
+        "image": "http://img.youtube.com/vi/f7usCib0MKU/maxresdefault.jpg",
+        "video": "https://www.youtube.com/embed/f7usCib0MKU"
+    },
+    {
+        "type": "anime",
+        "title": "Thám Tử Lừng Danh Conan: Thiên Thần Sa Ngã Trên Xa Lộ ",
+        "desc": "Movie 29",
+        "image": "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/p/o/poster_conan_movie_29.jpg",
+        "video": "https://player.phimapi.com/player/?url=https://v7.kkphimplayer7.com/20260718/iH6o7Ll4/index.m3u8"
+    },
+    {
+        "type": "tvshow",
+        "title": "Mùa Hè Rực Rỡ : Full 13 Tập || FAPtv Phim Tuổi Teen",
+        "desc": "FapTV",
+        "image": "http://img.youtube.com/vi/pmN3kieZKak/maxresdefault.jpg",
+        "video": "https://www.youtube.com/watch?v=pmN3kieZKak"
+    },
+    {
+        "type": "tvshow",
+        "title": "Tầng Lớp Sinh Viên Full 22 Tập - Phim Sinh Viên - Tình Cảm | Hi Team - FAPtv",
+        "desc": "FapTV",
+        "image": "http://img.youtube.com/vi/HHLrhBancJQ/maxresdefault.jpg",
+        "video": "https://www.youtube.com/watch?v=HHLrhBancJQ"
     }
 ]
