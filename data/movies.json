@@ -182,6 +182,13 @@
         "video": "https://www.youtube.com/embed/kWSwdqJOR18"
     },
     {
+        "type": "music",
+        "title": "Không Buông x Từng Là Của Nhau x Tìm Em - HNGLE x BẢO ANH ",
+        "desc": "|| Những Bản Hits Nhạc Trẻ Chill Triệu View",
+        "image": "http://img.youtube.com/vi/wVLhvXB2flE/maxresdefault.jpg",
+        "video": "https://www.youtube.com/embed/wVLhvXB2flE"
+    },
+    {
         "type": "tvshow",
         "title": "Running Man Mùa 3",
         "desc": "Tập 1",
@@ -196,18 +203,18 @@
         "video": "https://www.youtube.com/embed/3NMr0tF_l-0"
     },
     {
-        "type": "music",
-        "title": "NHẠC REMIX TIKTOK TRIỆU VIEW 🎼Top 20 Nhạc TikTok Hay 2025",
-        "desc": "",
-        "image": "http://img.youtube.com/vi/f7usCib0MKU/maxresdefault.jpg",
-        "video": "https://www.youtube.com/embed/f7usCib0MKU"
-    },
-    {
         "type": "anime",
         "title": "Thám Tử Lừng Danh Conan: Thiên Thần Sa Ngã Trên Xa Lộ ",
         "desc": "Movie 29",
         "image": "https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/cache/1/image/c5f0a1eff4c394a251036189ccddaacd/p/o/poster_conan_movie_29.jpg",
         "video": "https://player.phimapi.com/player/?url=https://v7.kkphimplayer7.com/20260718/iH6o7Ll4/index.m3u8"
+    },
+    {
+        "type": "anime",
+        "title": "Thám Tử Lừng Danh Conan |",
+        "desc": "Hồ Sơ Phá Án #1: Conan VS Kaito - Cuộc đối đầu chưa có hồi kết",
+        "image": "http://img.youtube.com/vi/UsNzTsuvr3s/maxresdefault.jpg",
+        "video": "https://www.youtube.com/embed/UsNzTsuvr3s"
     },
     {
         "type": "tvshow",
