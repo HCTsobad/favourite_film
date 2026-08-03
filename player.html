@@ -267,7 +267,7 @@
         const slug = params.get('slug');     // phim từ API
         const playlist = params.get('playlist'); // JSON playlist nhiều tập (tùy chọn)
 
-        const requestedEpisode = Number.parseInt(params.get('episode'), 10);
+        const requestedEpisodeNumber = Number.parseInt(params.get('episode'), 10);
 
         // ---- Helpers ----
         function isPhimApiPlayerUrl(url) {
@@ -305,16 +305,16 @@
             }
 
             // phát tập 1 mặc định
-            const initialEpisodeIndex = Number.isInteger(requestedEpisode)
-                && requestedEpisode >= 0
-                && requestedEpisode < episodes.length
-                ? requestedEpisode
+            const initialEpisodeIndex = Number.isInteger(requestedEpisodeNumber)
+                && requestedEpisodeNumber >= 1
+                && requestedEpisodeNumber <= episodes.length
+                ? requestedEpisodeNumber - 1
                 : 0;
             playVideo(episodes[initialEpisodeIndex].link);
 
             // render list
             episodeListDiv.innerHTML = episodes.map((ep, i) =>
-                `<button class="episode-btn ${i === 0 ? 'active' : ''}" data-link="${ep.link}">Tập ${ep.name || (i + 1)}</button>`
+                `<button class="episode-btn ${i === initialEpisodeIndex ? 'active' : ''}" data-link="${ep.link}">Tập ${ep.name || (i + 1)}</button>`
             ).join('');
 
             // click chọn tập
@@ -323,11 +323,17 @@
                 button.classList.toggle('active', index === initialEpisodeIndex);
             });
 
-            episodeButtons.forEach(btn => {
+            episodeButtons.forEach((btn, index) => {
                 btn.addEventListener('click', () => {
                     episodeListDiv.querySelectorAll('.episode-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     playVideo(btn.dataset.link);
+
+                    if (slug) {
+                        const currentUrl = new URL(window.location.href);
+                        currentUrl.searchParams.set('episode', String(index + 1));
+                        window.history.replaceState(null, '', `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`);
+                    }
                 });
             });
         }

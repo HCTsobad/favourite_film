@@ -80,7 +80,7 @@
             relatedKey: '',
             episodes: episodes.map((episode, index) => ({
                 name: episode.name || index + 1,
-                url: `player.html?slug=${encodeURIComponent(slug)}&episode=${index}`
+                url: `player.html?slug=${encodeURIComponent(slug)}&episode=${index + 1}`
             }))
         };
     }
